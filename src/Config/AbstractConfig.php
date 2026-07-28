@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace JiNexus\Config\Config;
 
 use JiNexus\Config\Base\AbstractBase;
@@ -10,9 +13,9 @@ use JiNexus\Config\Base\AbstractBase;
 abstract class AbstractConfig extends AbstractBase implements ConfigInterface
 {
     /**
-     * @var
+     * @var array
      */
-    protected $config = [];
+    protected array $config = [];
 
     /**
      * AbstractConfig constructor
@@ -22,7 +25,7 @@ abstract class AbstractConfig extends AbstractBase implements ConfigInterface
     /**
      * @return array
      */
-    public function getConfig()
+    public function getConfig(): array
     {
         return $this->config;
     }
@@ -30,7 +33,7 @@ abstract class AbstractConfig extends AbstractBase implements ConfigInterface
     /**
      * @param array $config
      */
-    public function setConfig($config = [])
+    public function setConfig(array $config = []): void
     {
         $this->config = $config;
     }
@@ -42,7 +45,7 @@ abstract class AbstractConfig extends AbstractBase implements ConfigInterface
      * @param null $default
      * @return mixed|null
      */
-    public function get($needle, $default = null)
+    public function get($needle, $default = null): mixed
     {
         if (array_key_exists($needle, $this->config)) {
             return $this->config[$needle];
@@ -58,7 +61,7 @@ abstract class AbstractConfig extends AbstractBase implements ConfigInterface
      * @param $value
      * @return $this
      */
-    public function set($needle = '', $value)
+    public function set(string $needle, $value): ConfigInterface
     {
         if ($needle) {
             $this->config[$needle] = $value;
@@ -87,7 +90,7 @@ abstract class AbstractConfig extends AbstractBase implements ConfigInterface
      * @param $value
      * @return $this
      */
-    public function __set($needle = '', $value)
+    public function __set(string $needle, $value)
     {
         $this->set($needle, $value);
 
@@ -95,12 +98,12 @@ abstract class AbstractConfig extends AbstractBase implements ConfigInterface
     }
 
     /**
-     * Check if needle exist in the config
+     * Check if a needle exists in the config
      *
      * @param $needle
      * @return bool
      */
-    public function has($needle)
+    public function has($needle): bool
     {
         return array_key_exists($needle, $this->config);
     }

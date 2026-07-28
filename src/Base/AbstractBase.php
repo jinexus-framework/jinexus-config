@@ -1,7 +1,12 @@
 <?php
+
+declare(strict_types=1);
+
 namespace JiNexus\Config\Base;
 
-use JiNexus\Config\Exception;
+use JiNexus\Config\ConfigException;
+use ReflectionException;
+use ReflectionObject;
 
 /**
  * Class AbstractBase
@@ -12,20 +17,20 @@ abstract class AbstractBase implements BaseInterface
     /**
      * Base setters and getters
      *
-     * @param $name
+     * @param $property
      * @param array $arguments
      * @return $this|mixed
-     * @throws Exception
+     * @throws ConfigException|ReflectionException
      */
-    public function __call($name, array $arguments)
+    public function __call($property, array $arguments)
     {
-        $action = substr($name, 0, 3);
+        $action = substr($property, 0, 3);
 
         if ( $action == 'get' || $action == 'set' ) {
-            $property = lcfirst(substr($name, 3));
+            $property = lcfirst(substr($property, 3));
 
             if ( property_exists($this, $property) ) {
-                $reflection = new \ReflectionObject($this);
+                $reflection = new ReflectionObject($this);
 
                 if ( $reflection->getProperty($property)->isPublic() ) {
                     if ( $action == 'get' ) {
@@ -39,6 +44,6 @@ abstract class AbstractBase implements BaseInterface
             }
         }
 
-        throw new Exception('Not implemented: ' . get_called_class() . '::' . $name);
+        throw new ConfigException('Not implemented: ' . get_called_class() . '::' . $property);
     }
 }

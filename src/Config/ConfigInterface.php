@@ -1,8 +1,10 @@
 <?php
+
+declare(strict_types=1);
+
 namespace JiNexus\Config\Config;
 
 use JiNexus\Config\Base\BaseInterface;
-use JiNexus\ModuleManager\ModuleManager\ModuleManager;
 
 /**
  * Interface ConfigInterface
@@ -18,12 +20,12 @@ interface ConfigInterface extends BaseInterface
     /**
      * @return array
      */
-    public function getConfig();
+    public function getConfig(): array;
 
     /**
      * @param array $config
      */
-    public function setConfig($config = []);
+    public function setConfig(array $config = []);
 
     /**
      * Get a value and return $default if there is no element set.
@@ -32,7 +34,7 @@ interface ConfigInterface extends BaseInterface
      * @param null $default
      * @return mixed|null
      */
-    public function get($needle, $default = null);
+    public function get($needle, mixed $default = null): mixed;
 
     /**
      * Set a value in the config
@@ -41,7 +43,7 @@ interface ConfigInterface extends BaseInterface
      * @param $value
      * @return $this
      */
-    public function set($needle = '', $value);
+    public function set(string $needle, $value): ConfigInterface;
 
     /**
      * Magic method to get a config needle, forwards to $this->get()
@@ -58,13 +60,13 @@ interface ConfigInterface extends BaseInterface
      * @param $value
      * @return $this
      */
-    public function __set($needle = '', $value);
+    public function __set(string $needle, $value);
 
     /**
-     * Check if needle exist in the config
+     * Check if a needle exists in the config
      *
      * @param $needle
      * @return bool
      */
-    public function has($needle);
+    public function has($needle): bool;
 }

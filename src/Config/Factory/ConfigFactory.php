@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace JiNexus\Config\Config\Factory;
 
 use JiNexus\Config\Config\Config;
@@ -13,7 +16,7 @@ class ConfigFactory extends AbstractFactory
     /**
      * @return Config
      */
-    public static function build()
+    public static function build(): Config
     {
         return new Config();
     }
